@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DMA — Профессиональный ремонт техники</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #0d1117;
+    --dark:   #111827;
+    --card:   #161d2b;
+    --blue:   #1a5fe8;
+    --blue2:  #2b74ff;
+    --accent: #4b96ff;
+    --light:  #e8edf5;
+    --muted:  #8a9ab5;
+    --white:  #ffffff;
+    --border: rgba(255,255,255,0.07);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--light);
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo-badge {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 1px;
+    padding: 6px 12px;
+    border-radius: 6px;
+  }
+  .logo-text { font-size: 15px; color: var(--muted); line-height: 1.2; }
+  .logo-text strong { display: block; color: var(--white); font-size: 16px; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--blue); color: #fff; border: none;
+    padding: 10px 22px; border-radius: 8px; font-size: 14px;
+    font-weight: 600; cursor: pointer; text-decoration: none;
+    transition: background .2s, transform .15s;
+  }
+  .nav-cta:hover { background: var(--blue2); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    padding: 100px 5% 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 70% at 70% 50%, rgba(26,95,232,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  /* circuit pattern */
+  .hero::after {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 55%; height: 100%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M10 0v10h10M30 0v20h20M50 10h10M0 30h10v10M40 30h20M10 50v10M30 40v20' stroke='%231a5fe8' stroke-width='.4' fill='none' opacity='.18'/%3E%3Ccircle cx='10' cy='10' r='2' fill='%231a5fe8' opacity='.25'/%3E%3Ccircle cx='30' cy='30' r='2' fill='%231a5fe8' opacity='.25'/%3E%3Ccircle cx='50' cy='50' r='2' fill='%231a5fe8' opacity='.25'/%3E%3C/svg%3E") repeat;
+    opacity: .5;
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 2; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(26,95,232,0.15); border: 1px solid rgba(26,95,232,0.35);
+    color: var(--accent); font-size: 13px; font-weight: 600;
+    padding: 6px 14px; border-radius: 20px; margin-bottom: 24px;
+    letter-spacing: .5px;
+  }
+  .eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+
+  h1 { font-size: clamp(40px, 5vw, 68px); font-weight: 900; line-height: 1.05; margin-bottom: 8px; }
+  h1 .blue { color: var(--accent); }
+  .hero-sub { font-size: 18px; color: var(--muted); margin: 20px 0 36px; max-width: 420px; }
+
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--blue); color: #fff; padding: 14px 28px;
+    border-radius: 10px; font-size: 15px; font-weight: 700;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background .2s, transform .15s, box-shadow .2s;
+    box-shadow: 0 0 24px rgba(26,95,232,0.35);
+  }
+  .btn-primary:hover { background: var(--blue2); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(26,95,232,0.45); }
+  .btn-outline {
+    background: transparent; color: var(--light); padding: 14px 28px;
+    border-radius: 10px; font-size: 15px; font-weight: 600;
+    text-decoration: none; border: 1px solid var(--border);
+    transition: border-color .2s, background .2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); background: rgba(26,95,232,0.08); }
+
+  .hero-stats { display: flex; gap: 36px; margin-top: 44px; }
+  .stat-num { font-size: 32px; font-weight: 900; color: var(--white); }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  /* hero image panel */
+  .hero-visual {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .hero-img-wrap {
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    position: relative;
+  }
+  .hero-img-wrap img { width: 100%; display: block; height: 340px; object-fit: cover; }
+  .guarantee-badge {
+    position: absolute; bottom: 20px; right: 20px;
+    background: var(--blue); color: #fff;
+    padding: 14px 20px; border-radius: 12px;
+    text-align: center; font-weight: 700; font-size: 13px;
+    box-shadow: 0 8px 24px rgba(26,95,232,0.5);
+  }
+  .guarantee-badge big { display: block; font-size: 22px; }
+
+  .hero-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+  .hero-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .hero-card-icon { font-size: 22px; }
+  .hero-card-title { font-size: 13px; font-weight: 700; color: var(--white); }
+  .hero-card-desc { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+  /* ── SERVICES ── */
+  .section { padding: 96px 5%; }
+  .section-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+  }
+  .section-title { font-size: clamp(28px,3vw,42px); font-weight: 900; color: var(--white); margin-bottom: 16px; }
+  .section-desc { font-size: 16px; color: var(--muted); max-width: 520px; margin-bottom: 52px; }
+
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .service-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px 24px;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+    cursor: default;
+  }
+  .service-card:hover {
+    border-color: rgba(26,95,232,.45);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+  }
+  .service-icon {
+    width: 52px; height: 52px;
+    background: rgba(26,95,232,0.15);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 18px;
+  }
+  .service-card h3 { font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .service-card p  { font-size: 14px; color: var(--muted); line-height: 1.5; }
+  .service-card .tag {
+    display: inline-block; margin-top: 14px;
+    background: rgba(26,95,232,0.12); color: var(--accent);
+    font-size: 12px; font-weight: 600;
+    padding: 4px 10px; border-radius: 6px;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how { background: var(--dark); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 32px; position: relative; }
+  .steps::before {
+    content: ''; position: absolute;
+    top: 32px; left: 10%; right: 10%; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    pointer-events: none;
+  }
+  .step { text-align: center; }
+  .step-num {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--blue); color: #fff;
+    font-size: 22px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 18px;
+    box-shadow: 0 0 0 8px rgba(26,95,232,0.12);
+  }
+  .step h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .step p  { font-size: 14px; color: var(--muted); }
+
+  /* ── WHY US ── */
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .why-list { display: flex; flex-direction: column; gap: 24px; }
+  .why-item { display: flex; gap: 16px; align-items: flex-start; }
+  .why-dot {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: rgba(26,95,232,0.15); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .why-item h4 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+  .why-item p  { font-size: 14px; color: var(--muted); }
+  .why-visual {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; padding: 36px;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .metric-row { display: flex; justify-content: space-between; align-items: center; }
+  .metric-label { font-size: 14px; color: var(--muted); }
+  .metric-value { font-size: 15px; font-weight: 700; color: var(--white); }
+  .bar-wrap { width: 100%; height: 8px; background: rgba(255,255,255,0.07); border-radius: 4px; margin-top: 6px; }
+  .bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--blue), var(--accent)); }
+
+  /* ── PRICING ── */
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 24px; }
+  .price-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px 28px;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .price-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.35); }
+  .price-card.featured {
+    border-color: var(--blue);
+    box-shadow: 0 0 40px rgba(26,95,232,0.2);
+  }
+  .price-badge {
+    display: inline-block; background: var(--blue); color: #fff;
+    font-size: 11px; font-weight: 700; letter-spacing: .5px;
+    padding: 4px 10px; border-radius: 6px; margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .price-name { font-size: 20px; font-weight: 800; color: var(--white); margin-bottom: 4px; }
+  .price-range { font-size: 28px; font-weight: 900; color: var(--accent); margin: 12px 0; }
+  .price-range small { font-size: 14px; color: var(--muted); font-weight: 400; }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 20px 0 28px; }
+  .price-features li { font-size: 14px; color: var(--muted); display: flex; gap: 10px; align-items: flex-start; }
+  .price-features li::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .price-btn {
+    display: block; text-align: center; text-decoration: none;
+    padding: 12px; border-radius: 10px; font-size: 14px; font-weight: 700;
+    transition: background .2s, transform .15s;
+  }
+  .price-btn.outline { border: 1px solid var(--border); color: var(--light); }
+  .price-btn.outline:hover { border-color: var(--accent); background: rgba(26,95,232,0.08); }
+  .price-btn.solid { background: var(--blue); color: #fff; }
+  .price-btn.solid:hover { background: var(--blue2); transform: translateY(-1px); }
+
+  /* ── CONTACT ── */
+  .contact-section { background: var(--dark); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .contact-info { display: flex; flex-direction: column; gap: 24px; }
+  .contact-item { display: flex; gap: 16px; align-items: flex-start; }
+  .contact-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: rgba(26,95,232,0.15); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .contact-item h4 { font-size: 14px; font-weight: 700; color: var(--white); }
+  .contact-item p  { font-size: 14px; color: var(--muted); margin-top: 2px; }
+  .form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form label { font-size: 13px; font-weight: 600; color: var(--muted); display: block; margin-bottom: 6px; }
+  .form input, .form textarea, .form select {
+    width: 100%; padding: 12px 16px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--white); font-size: 14px;
+    font-family: inherit; transition: border-color .2s;
+    outline: none;
+  }
+  .form input:focus, .form textarea:focus, .form select:focus { border-color: var(--blue); }
+  .form textarea { resize: vertical; min-height: 110px; }
+  .form select option { background: var(--card); }
+  .form-submit {
+    background: var(--blue); color: #fff; border: none;
+    padding: 14px 28px; border-radius: 10px;
+    font-size: 15px; font-weight: 700; cursor: pointer;
+    transition: background .2s, transform .15s;
+    align-self: flex-start;
+    box-shadow: 0 0 24px rgba(26,95,232,0.35);
+  }
+  .form-submit:hover { background: var(--blue2); transform: translateY(-1px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy); border-top: 1px solid var(--border);
+    padding: 52px 5% 32px;
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  .footer-brand p { font-size: 14px; color: var(--muted); margin-top: 14px; max-width: 280px; line-height: 1.6; }
+  .footer-col h5 { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 16px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a { font-size: 14px; color: var(--muted); text-decoration: none; transition: color .2s; }
+  .footer-col ul a:hover { color: var(--accent); }
+  .footer-bottom {
+    border-top: 1px solid var(--border); padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-bottom p { font-size: 13px; color: var(--muted); }
+
+  /* ── ADMIN LINK ── */
+  .admin-link {
+    color: var(--muted); text-decoration: none; font-size: 17px;
+    margin-right: 18px; transition: color .2s, transform .2s;
+    display: inline-flex; align-items: center;
+  }
+  .admin-link:hover { color: var(--accent); transform: scale(1.1); }
+
+  /* ── REVIEWS ── */
+  .reviews-summary { display: flex; align-items: center; gap: 22px; margin-bottom: 40px; }
+  .reviews-score { font-size: 52px; font-weight: 900; color: var(--white); line-height: 1; }
+  .reviews-summary-sub { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .review-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 26px 24px;
+    display: flex; flex-direction: column; gap: 14px;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+  }
+  .review-card:hover {
+    border-color: rgba(26,95,232,.4); transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+  }
+  .review-top { display: flex; align-items: center; gap: 12px; }
+  .review-avatar {
+    width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--blue), var(--accent));
+    color: #fff; font-weight: 800; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .review-name { font-size: 14px; font-weight: 700; color: var(--white); }
+  .review-date { font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .review-stars { color: var(--accent); font-size: 14px; letter-spacing: 2px; }
+  .review-stars .dim { color: rgba(255,255,255,0.15); }
+  .review-text { font-size: 14px; color: var(--muted); line-height: 1.55; }
+  .review-tag {
+    align-self: flex-start; background: rgba(26,95,232,0.12); color: var(--accent);
+    font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px;
+  }
+
+  /* ── ADMIN MODAL ── */
+  .admin-overlay {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(5,7,12,0.75); backdrop-filter: blur(6px);
+    align-items: center; justify-content: center; padding: 24px;
+  }
+  .admin-modal {
+    position: relative; background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; padding: 36px; width: 100%; max-width: 760px;
+    max-height: 85vh; overflow-y: auto; box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  }
+  .admin-close {
+    position: absolute; top: 18px; right: 18px; background: transparent; border: none;
+    color: var(--muted); font-size: 18px; cursor: pointer; transition: color .2s;
+  }
+  .admin-close:hover { color: var(--white); }
+  .admin-header { text-align: center; margin-bottom: 28px; }
+  .admin-icon {
+    width: 56px; height: 56px; margin: 0 auto 16px; background: rgba(26,95,232,0.15);
+    border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px;
+  }
+  .admin-header h3 { font-size: 20px; font-weight: 800; color: var(--white); margin-bottom: 6px; }
+  .admin-header p { font-size: 14px; color: var(--muted); }
+  .admin-login-form { max-width: 320px; margin: 0 auto; display: flex; flex-direction: column; gap: 6px; }
+  .admin-login-form label { font-size: 13px; font-weight: 600; color: var(--muted); margin-top: 10px; }
+  .admin-login-form input {
+    padding: 12px 16px; background: var(--dark); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--white); font-size: 14px; outline: none;
+    font-family: inherit; transition: border-color .2s;
+  }
+  .admin-login-form input:focus { border-color: var(--blue); }
+  .admin-login-form button { margin-top: 16px; justify-content: center; }
+  .admin-error { color: #ff6b6b; font-size: 13px; margin-top: 10px; text-align: center; }
+  .admin-hint { font-size: 12px; color: var(--muted); text-align: center; margin-top: 14px; opacity: .7; }
+  .admin-dash-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 24px; gap: 16px; flex-wrap: wrap;
+  }
+  .admin-dash-header h3 { font-size: 19px; font-weight: 800; color: var(--white); margin-bottom: 4px; }
+  .admin-dash-header p { font-size: 13px; color: var(--muted); }
+  .admin-table-wrap { overflow-x: auto; }
+  .admin-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .admin-table th {
+    text-align: left; padding: 10px 12px; color: var(--muted); font-weight: 600;
+    border-bottom: 1px solid var(--border); white-space: nowrap;
+  }
+  .admin-table td { padding: 12px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--light); }
+  .admin-client-name { font-weight: 700; color: var(--white); }
+  .admin-client-phone { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .admin-problem-cell { max-width: 220px; color: var(--muted); }
+  .admin-status-select {
+    background: var(--dark); border: 1px solid var(--border); color: var(--white);
+    border-radius: 8px; padding: 6px 8px; font-size: 12px; outline: none; font-family: inherit;
+  }
+  .admin-status-select.status-new { border-color: rgba(75,150,255,.6); }
+  .admin-status-select.status-progress { border-color: rgba(255,180,60,.6); }
+  .admin-status-select.status-done { border-color: rgba(40,180,110,.6); }
+  .admin-delete-btn {
+    background: transparent; border: none; cursor: pointer; font-size: 15px;
+    opacity: .6; transition: opacity .2s;
+  }
+  .admin-delete-btn:hover { opacity: 1; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding-top: 90px; }
+    .hero-visual { display: none; }
+    .why-grid, .contact-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .steps::before { display: none; }
+  }
+  @media (max-width: 520px) {
+    .hero-stats { flex-wrap: wrap; gap: 20px; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .hero-cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <span class="logo-badge">DMA</span>
+    <span class="logo-text"><strong>Ремонт техники</strong>Профессиональный сервис</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#how">Как это работает</a></li>
+    <li><a href="#why">О нас</a></li>
+    <li><a href="#reviews">Отзывы</a></li>
+    <li><a href="#pricing">Цены</a></li>
+    <li><a href="#contact">Контакты</a></li>
+  </ul>
+  <a href="#" class="admin-link" onclick="openAdmin(); return false;" title="Кабинет администратора">🔐</a>
+  <a href="#contact" class="nav-cta">Оставить заявку</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">Профессиональный сервис с 2012 года</div>
+    <h1>DMA<br><span class="blue">Ремонт<br>техники</span></h1>
+    <p class="hero-sub">Быстро, качественно и с гарантией — вернём вашу технику к жизни.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Записаться на ремонт</a>
+      <a href="#services" class="btn-outline">Наши услуги</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">8<span>к+</span></div>
+        <div class="stat-label">Устройств отремонтировано</div>
+      </div>
+      <div>
+        <div class="stat-num">12<span>мес</span></div>
+        <div class="stat-label">Гарантия на работы</div>
+      </div>
+      <div>
+        <div class="stat-num">98<span>%</span></div>
+        <div class="stat-label">Довольных клиентов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-img-wrap">
+      <img src="https://images.unsplash.com/photo-1597740985671-2a8a3b80502e?w=700&q=80" alt="Ремонт платы ноутбука">
+      <div class="guarantee-badge">
+        <big>✓</big>
+        ГАРАНТИЯ<br>до 12 месяцев
+      </div>
+    </div>
+    <div class="hero-cards">
+      <div class="hero-card">
+        <div class="hero-card-icon">⚡</div>
+        <div class="hero-card-title">Быстрый ремонт</div>
+        <div class="hero-card-desc">Большинство поломок — в день обращения</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-icon">🔩</div>
+        <div class="hero-card-title">Оригинальные запчасти</div>
+        <div class="hero-card-desc">Только проверенные комплектующие</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-icon">💳</div>
+        <div class="hero-card-title">Честные цены</div>
+        <div class="hero-card-desc">Оценка стоимости до начала работ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="section-label">Что мы ремонтируем</div>
+  <h2 class="section-title">Полный спектр услуг</h2>
+  <p class="section-desc">Принимаем в работу любую бытовую и цифровую технику — от смартфонов до телевизоров.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">💻</div>
+      <h3>Ноутбуки и компьютеры</h3>
+      <p>Замена экрана, клавиатуры, системы охлаждения, переустановка Windows/macOS, чистка от пыли.</p>
+      <span class="tag">от 1 дня</span>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <h3>Смартфоны и планшеты</h3>
+      <p>Замена стекла, дисплея, аккумулятора, разъёмов, ремонт после воды. Все марки.</p>
+      <span class="tag">от 2 часов</span>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📺</div>
+      <h3>Телевизоры и мониторы</h3>
+      <p>Ремонт блока питания, замена матрицы, подсветки, плат управления.</p>
+      <span class="tag">от 2 дней</span>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎮</div>
+      <h3>Игровые приставки</h3>
+      <p>Ремонт PS4/PS5, Xbox, Nintendo Switch: джойстики, чипы, HDMI-разъёмы, охлаждение.</p>
+      <span class="tag">от 1 дня</span>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🏠</div>
+      <h3>Бытовая техника</h3>
+      <p>Стиральные машины, холодильники, микроволновки, пылесосы — выезд мастера на дом.</p>
+      <span class="tag">выезд на дом</span>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🖨️</div>
+      <h3>Принтеры и оргтехника</h3>
+      <p>Ремонт и обслуживание принтеров, МФУ, заправка картриджей для офисов и дома.</p>
+      <span class="tag">от 1 дня</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how" id="how">
+  <div class="section-label">Процесс работы</div>
+  <h2 class="section-title">Как это работает</h2>
+  <p class="section-desc">Простая и прозрачная схема — от заявки до получения исправного устройства.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Оставьте заявку</h3>
+      <p>Позвоните, напишите или заполните форму на сайте — опишите проблему.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Диагностика</h3>
+      <p>Мастер проведёт бесплатную диагностику и назовёт точную стоимость ремонта.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Ремонт</h3>
+      <p>После вашего согласия приступаем к работе. Держим вас в курсе по каждому этапу.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Готово!</h3>
+      <p>Забираете устройство с гарантией до 12 месяцев и оплачиваете только по факту.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section" id="why">
+  <div class="why-grid">
+    <div>
+      <div class="section-label">Почему DMA</div>
+      <h2 class="section-title">Надёжный сервис, которому доверяют</h2>
+      <p class="section-desc">За 12 лет работы мы собрали команду опытных мастеров и выстроили прозрачный сервис.</p>
+      <div class="why-list">
+        <div class="why-item">
+          <div class="why-dot">🔧</div>
+          <div>
+            <h4>Опытные мастера</h4>
+            <p>Сертифицированные специалисты с опытом от 5 лет в своей специализации.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-dot">📦</div>
+          <div>
+            <h4>Оригинальные запчасти</h4>
+            <p>Работаем только с сертифицированными поставщиками, никаких подделок.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-dot">🛡️</div>
+          <div>
+            <h4>Гарантия до 12 месяцев</h4>
+            <p>На все виды работ и установленные запчасти. Письменная гарантия на руки.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-dot">🚀</div>
+          <div>
+            <h4>Срочный ремонт</h4>
+            <p>Большинство задач решаем в день обращения, сложные — за 2–3 рабочих дня.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual">
+      <h3 style="font-size:18px;font-weight:800;color:var(--white);margin-bottom:8px;">Наши показатели</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:24px;">Результаты за 2024 год</p>
+      <div>
+        <div class="metric-row">
+          <span class="metric-label">Выполненных ремонтов</span>
+          <span class="metric-value">2 147</span>
+        </div>
+        <div class="bar-wrap"><div class="bar" style="width:92%"></div></div>
+      </div>
+      <div>
+        <div class="metric-row">
+          <span class="metric-label">Удовлетворённость клиентов</span>
+          <span class="metric-value">98%</span>
+        </div>
+        <div class="bar-wrap"><div class="bar" style="width:98%"></div></div>
+      </div>
+      <div>
+        <div class="metric-row">
+          <span class="metric-label">Ремонт в день обращения</span>
+          <span class="metric-value">74%</span>
+        </div>
+        <div class="bar-wrap"><div class="bar" style="width:74%"></div></div>
+      </div>
+      <div>
+        <div class="metric-row">
+          <span class="metric-label">Повторных обращений</span>
+          <span class="metric-value">63%</span>
+        </div>
+        <div class="bar-wrap"><div class="bar" style="width:63%"></div></div>
+      </div>
+      <div style="margin-top:20px;padding:16px;background:rgba(26,95,232,0.1);border-radius:10px;border:1px solid rgba(26,95,232,0.25);">
+        <div style="font-size:28px;font-weight:900;color:var(--accent);">4.9 / 5.0</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:4px;">Средняя оценка на Яндекс.Картах и 2ГИС</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section" id="reviews">
+  <div class="section-label">Отзывы клиентов</div>
+  <h2 class="section-title">Нам доверяют сотни клиентов</h2>
+  <p class="section-desc">Реальные отзывы людей, которые уже доверили нам свою технику.</p>
+
+  <div class="reviews-summary">
+    <div class="reviews-score">4.8</div>
+    <div>
+      <div class="review-stars">★★★★<span class="dim">★</span></div>
+      <p class="reviews-summary-sub">312 отзывов на Яндекс.Картах и 2ГИС</p>
+    </div>
+  </div>
+
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-top">
+        <div class="review-avatar">АС</div>
+        <div>
+          <div class="review-name">Анна Смирнова</div>
+          <div class="review-date">12 мая 2026</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Ноутбук не включался после падения — думала, что плате конец. Мастера всё диагностировали бесплатно, нашли проблему за день и отремонтировали дешевле, чем я ожидала. Очень довольна сервисом.</p>
+      <span class="review-tag">Ноутбук / ПК</span>
+    </div>
+
+    <div class="review-card">
+      <div class="review-top">
+        <div class="review-avatar">ДК</div>
+        <div>
+          <div class="review-name">Дмитрий Котов</div>
+          <div class="review-date">28 апреля 2026</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Разбил экран телефона утром, вечером уже забрал с новым стеклом. Быстро, аккуратно, без скрытых платежей. Буду обращаться ещё, если что-то случится с техникой.</p>
+      <span class="review-tag">Смартфон</span>
+    </div>
+
+    <div class="review-card">
+      <div class="review-top">
+        <div class="review-avatar">ЕВ</div>
+        <div>
+          <div class="review-name">Елена Воробьёва</div>
+          <div class="review-date">15 апреля 2026</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★<span class="dim">★</span></div>
+      <p class="review-text">Телевизор перестал показывать изображение, звук был. Заменили подсветку матрицы, ждать пришлось чуть дольше, чем обещали из-за заказа детали, но результатом я довольна — картинка как новая.</p>
+      <span class="review-tag">Телевизор</span>
+    </div>
+
+    <div class="review-card">
+      <div class="review-top">
+        <div class="review-avatar">ИП</div>
+        <div>
+          <div class="review-name">Игорь Поляков</div>
+          <div class="review-date">2 апреля 2026</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Приставка перегревалась и выключалась через 10 минут игры. Почистили, заменили термопасту и один из портов — теперь работает без сбоев. Цена за работу честная, мастер всё объяснил по полочкам.</p>
+      <span class="review-tag">Игровая приставка</span>
+    </div>
+
+    <div class="review-card">
+      <div class="review-top">
+        <div class="review-avatar">СМ</div>
+        <div>
+          <div class="review-name">Светлана Морозова</div>
+          <div class="review-date">19 марта 2026</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Вызывала мастера на дом к стиральной машине — приехал в тот же день, нашёл и заменил неисправный насос прямо на месте. Очень удобно, что не нужно было тащить технику куда-то самой.</p>
+      <span class="review-tag">Бытовая техника</span>
+    </div>
+
+    <div class="review-card">
+      <div class="review-top">
+        <div class="review-avatar">ОР</div>
+        <div>
+          <div class="review-name">Олег Рябцев</div>
+          <div class="review-date">6 марта 2026</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★<span class="dim">★</span></div>
+      <p class="review-text">Обслуживаем у DMA офисные принтеры уже второй год — приезжают по графику, чистят, меняют картриджи, никаких простоев в работе. Рекомендую для небольших офисов.</p>
+      <span class="review-tag">Принтеры</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" style="background:var(--dark);" id="pricing">
+  <div class="section-label">Прайс-лист</div>
+  <h2 class="section-title">Примерная стоимость ремонта</h2>
+  <p class="section-desc">Точная цена определяется после диагностики. Оценка всегда бесплатна.</p>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-name">Смартфон / планшет</div>
+      <div class="price-range">от 500 ₽ <small>за работу</small></div>
+      <ul class="price-features">
+        <li>Замена стекла / дисплея</li>
+        <li>Ремонт разъёма зарядки</li>
+        <li>Замена аккумулятора</li>
+        <li>Восстановление после воды</li>
+        <li>Программные проблемы</li>
+      </ul>
+      <a href="#contact" class="price-btn outline">Оставить заявку</a>
+    </div>
+    <div class="price-card featured">
+      <div class="price-badge">Популярное</div>
+      <div class="price-name">Ноутбук / ПК</div>
+      <div class="price-range">от 800 ₽ <small>за работу</small></div>
+      <ul class="price-features">
+        <li>Чистка от пыли + термопаста</li>
+        <li>Замена клавиатуры / экрана</li>
+        <li>Апгрейд оперативной памяти</li>
+        <li>Установка SSD</li>
+        <li>Переустановка Windows / macOS</li>
+      </ul>
+      <a href="#contact" class="price-btn solid">Оставить заявку</a>
+    </div>
+    <div class="price-card">
+      <div class="price-name">Телевизор / Монитор</div>
+      <div class="price-range">от 1 200 ₽ <small>за работу</small></div>
+      <ul class="price-features">
+        <li>Ремонт блока питания</li>
+        <li>Замена подсветки матрицы</li>
+        <li>Ремонт платы управления</li>
+        <li>Выезд мастера на дом</li>
+        <li>Гарантия 12 месяцев</li>
+      </ul>
+      <a href="#contact" class="price-btn outline">Оставить заявку</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact-section" id="contact">
+  <div class="contact-grid">
+    <div>
+      <div class="section-label">Свяжитесь с нами</div>
+      <h2 class="section-title">Оставьте заявку</h2>
+      <p class="section-desc">Перезвоним в течение 15 минут, ответим на все вопросы и запишем на удобное время.</p>
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Телефон</h4>
+            <p>+7 (999) 123-45-67</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <h4>Режим работы</h4>
+            <p>Ежедневно с 9:00 до 21:00</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Адрес</h4>
+            <p>ул. Ленина, 42, офис 7</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <h4>Электронная почта</h4>
+            <p>info@dma-repair.ru</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="form">
+        <div class="form-row">
+          <div>
+            <label>Ваше имя</label>
+            <input type="text" id="formName" placeholder="Иван Петров">
+          </div>
+          <div>
+            <label>Телефон</label>
+            <input type="tel" id="formPhone" placeholder="+7 (___) ___-__-__">
+          </div>
+        </div>
+        <div>
+          <label>Тип устройства</label>
+          <select id="formDevice">
+            <option value="">Выберите тип</option>
+            <option>Ноутбук / ПК</option>
+            <option>Смартфон / Планшет</option>
+            <option>Телевизор / Монитор</option>
+            <option>Игровая приставка</option>
+            <option>Бытовая техника</option>
+            <option>Другое</option>
+          </select>
+        </div>
+        <div>
+          <label>Опишите проблему</label>
+          <textarea id="formProblem" placeholder="Что случилось с устройством? Любые детали помогут мастеру подготовиться заранее..."></textarea>
+        </div>
+        <button class="form-submit" id="submitBtn" onclick="submitRequest()">Отправить заявку</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="logo" style="margin-bottom:0">
+        <span class="logo-badge">DMA</span>
+        <span class="logo-text"><strong>Ремонт техники</strong>Профессиональный сервис</span>
+      </a>
+      <p>Быстро, качественно и с гарантией возвращаем к жизни любую технику с 2012 года.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Услуги</h5>
+      <ul>
+        <li><a href="#">Ноутбуки и ПК</a></li>
+        <li><a href="#">Смартфоны</a></li>
+        <li><a href="#">Телевизоры</a></li>
+        <li><a href="#">Приставки</a></li>
+        <li><a href="#">Бытовая техника</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Компания</h5>
+      <ul>
+        <li><a href="#why">О нас</a></li>
+        <li><a href="#why">Мастера</a></li>
+        <li><a href="#reviews">Отзывы</a></li>
+        <li><a href="#">Гарантия</a></li>
+        <li><a href="#" onclick="openAdmin(); return false;">Кабинет администратора</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Контакты</h5>
+      <ul>
+        <li><a href="#">+7 (902) 654 13-30</a></li>
+        <li><a href="#">info@dma-repair.ru</a></li>
+        <li><a href="#">ул. Санкт-Петрбуг, 52</a></li>
+        <li><a href="#">Пн–Вс 9:00–21:00</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 DMA Ремонт техники. Все права защищены.</p>
+    <p>Сделано с ❤️ для вашей техники</p>
+  </div>
+</footer>
+
+<!-- ADMIN MODAL -->
+<div class="admin-overlay" id="adminOverlay" onclick="if(event.target===this) closeAdmin()">
+  <div class="admin-modal">
+    <button class="admin-close" onclick="closeAdmin()">✕</button>
+
+    <div id="adminLoginView">
+      <div class="admin-header">
+        <div class="admin-icon">🔐</div>
+        <h3>Кабинет администратора</h3>
+        <p>Войдите, чтобы просматривать и обрабатывать заявки клиентов</p>
+      </div>
+      <div class="admin-login-form">
+        <label>Логин</label>
+        <input type="text" id="adminUser" placeholder="admin">
+        <label>Пароль</label>
+        <input type="password" id="adminPass" placeholder="••••••••" onkeydown="if(event.key==='Enter') adminLogin()">
+        <button class="form-submit" onclick="adminLogin()">Войти</button>
+        <p id="adminLoginError" class="admin-error" style="display:none;">Неверный логин или пароль</p>
+        <p class="admin-hint">Демо-доступ: admin / admin123</p>
+      </div>
+    </div>
+
+    <div id="adminDashboardView" style="display:none;">
+      <div class="admin-dash-header">
+        <div>
+          <h3>Заявки клиентов</h3>
+          <p id="adminStats">Загрузка...</p>
+        </div>
+        <button class="btn-outline" style="padding:8px 16px;font-size:13px;" onclick="adminLogout()">Выйти</button>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table" id="adminTable">
+          <thead>
+            <tr>
+              <th>Клиент</th>
+              <th>Устройство</th>
+              <th>Проблема</th>
+              <th>Дата</th>
+              <th>Статус</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="adminTableBody"></tbody>
+        </table>
+      </div>
+      <p id="adminEmptyMsg" style="display:none;color:var(--muted);text-align:center;padding:40px 0;">Заявок пока нет</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── Хранилище заявок (в памяти страницы — без бэкенда данные не сохраняются после перезагрузки) ──
+  let requestIdCounter = 1;
+  let appRequests = [
+    { id: requestIdCounter++, name: 'Мария Кузнецова', phone: '+7 (903) 555-12-34', device: 'Ноутбук / ПК', problem: 'Не включается после удара, возможно повреждена материнская плата', date: '17.06.2026', status: 'new' },
+    { id: requestIdCounter++, name: 'Дмитрий Котов', phone: '+7 (916) 222-44-55', device: 'Смартфон / Планшет', problem: 'Разбит экран, нужна замена дисплея', date: '16.06.2026', status: 'progress' },
+    { id: requestIdCounter++, name: 'Елена Воробьёва', phone: '+7 (925) 777-88-99', device: 'Телевизор / Монитор', problem: 'Пропало изображение, звук есть', date: '15.06.2026', status: 'done' }
+  ];
+
+  let isAdminLoggedIn = false;
+  const ADMIN_USER = 'admin';
+  const ADMIN_PASS = 'admin123';
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // ── Заявка с формы контактов ──
+  function submitRequest() {
+    const nameEl = document.getElementById('formName');
+    const phoneEl = document.getElementById('formPhone');
+    const deviceEl = document.getElementById('formDevice');
+    const problemEl = document.getElementById('formProblem');
+    const btn = document.getElementById('submitBtn');
+
+    const name = nameEl.value.trim();
+    const phone = phoneEl.value.trim();
+
+    if (!name || !phone) {
+      alert('Пожалуйста, укажите имя и телефон');
+      return;
+    }
+
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('ru-RU');
+
+    appRequests.unshift({
+      id: requestIdCounter++,
+      name: name,
+      phone: phone,
+      device: deviceEl.value || 'Не указано',
+      problem: problemEl.value.trim() || '—',
+      date: dateStr,
+      status: 'new'
+    });
+
+    renderAdminRequests();
+
+    btn.textContent = '✓ Заявка отправлена!';
+    btn.style.background = '#1a7f4e';
+    btn.disabled = true;
+
+    setTimeout(() => {
+      btn.textContent = 'Отправить заявку';
+      btn.style.background = '';
+      btn.disabled = false;
+      nameEl.value = '';
+      phoneEl.value = '';
+      deviceEl.value = '';
+      problemEl.value = '';
+    }, 2500);
+  }
+
+  // ── Открытие / закрытие модального окна ──
+  function openAdmin() {
+    document.getElementById('adminOverlay').style.display = 'flex';
+    if (isAdminLoggedIn) {
+      showAdminDashboard();
+    } else {
+      document.getElementById('adminLoginView').style.display = 'block';
+      document.getElementById('adminDashboardView').style.display = 'none';
+    }
+  }
+
+  function closeAdmin() {
+    document.getElementById('adminOverlay').style.display = 'none';
+  }
+
+  function adminLogin() {
+    const user = document.getElementById('adminUser').value.trim();
+    const pass = document.getElementById('adminPass').value;
+    const errEl = document.getElementById('adminLoginError');
+
+    if (user === ADMIN_USER && pass === ADMIN_PASS) {
+      isAdminLoggedIn = true;
+      errEl.style.display = 'none';
+      showAdminDashboard();
+    } else {
+      errEl.style.display = 'block';
+    }
+  }
+
+  function adminLogout() {
+    isAdminLoggedIn = false;
+    document.getElementById('adminUser').value = '';
+    document.getElementById('adminPass').value = '';
+    closeAdmin();
+  }
+
+  function showAdminDashboard() {
+    document.getElementById('adminLoginView').style.display = 'none';
+    document.getElementById('adminDashboardView').style.display = 'block';
+    renderAdminRequests();
+  }
+
+  // ── Рендер таблицы заявок ──
+  function renderAdminRequests() {
+    const tbody = document.getElementById('adminTableBody');
+    const emptyMsg = document.getElementById('adminEmptyMsg');
+    const stats = document.getElementById('adminStats');
+    if (!tbody) return;
+
+    const newCount = appRequests.filter(r => r.status === 'new').length;
+    stats.textContent = 'Всего заявок: ' + appRequests.length + ' · Новых: ' + newCount;
+
+    if (appRequests.length === 0) {
+      tbody.innerHTML = '';
+      emptyMsg.style.display = 'block';
+      return;
+    }
+    emptyMsg.style.display = 'none';
+
+    tbody.innerHTML = appRequests.map(function (r) {
+      return '<tr>' +
+        '<td><div class="admin-client-name">' + escapeHtml(r.name) + '</div>' +
+        '<div class="admin-client-phone">' + escapeHtml(r.phone) + '</div></td>' +
+        '<td>' + escapeHtml(r.device) + '</td>' +
+        '<td class="admin-problem-cell">' + escapeHtml(r.problem) + '</td>' +
+        '<td>' + r.date + '</td>' +
+        '<td><select class="admin-status-select status-' + r.status + '" onchange="updateStatus(' + r.id + ', this.value)">' +
+        '<option value="new"' + (r.status === 'new' ? ' selected' : '') + '>Новая</option>' +
+        '<option value="progress"' + (r.status === 'progress' ? ' selected' : '') + '>В работе</option>' +
+        '<option value="done"' + (r.status === 'done' ? ' selected' : '') + '>Готово</option>' +
+        '</select></td>' +
+        '<td><button class="admin-delete-btn" onclick="deleteRequest(' + r.id + ')" title="Удалить">🗑️</button></td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  function updateStatus(id, status) {
+    const req = appRequests.find(function (r) { return r.id === id; });
+    if (req) { req.status = status; }
+    renderAdminRequests();
+  }
+
+  function deleteRequest(id) {
+    appRequests = appRequests.filter(function (r) { return r.id !== id; });
+    renderAdminRequests();
+  }
+</script>
+
+</body>
+</html>
